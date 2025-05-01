@@ -2,7 +2,7 @@
 
 class Movement extends Phaser.Scene {
     constructor() {
-        super("movementScene");
+        super("PlayScene");
         this.my = { sprite: {}, group: {} };  // Create an object to hold sprite bindings
 
         // Create variables to hold constant values for sprite locations
