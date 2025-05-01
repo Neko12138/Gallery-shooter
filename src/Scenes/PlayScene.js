@@ -30,8 +30,8 @@ class Movement extends Phaser.Scene {
         my.group.bullets = this.add.group();
 
         this.keys = this.input.keyboard.addKeys({
-            left: 'A',
-            right: 'D',
+            up: 'W',
+            down: 'S',
             shoot: 'space'
         });
 
@@ -43,11 +43,11 @@ class Movement extends Phaser.Scene {
 
         if (this.keys.left.isDown && my.sprite.player.x >= 0 ) {
             my.sprite.player.flipX = true; 
-            my.sprite.player.x -= 5;
+            my.sprite.player.y -= 5;
             
         } else if (this.keys.right.isDown && my.sprite.player.x <= 800) {
             my.sprite.player.flipX = false; 
-            my.sprite.player.x += 5;
+            my.sprite.player.y += 5;
         }
 
         if (this.keys.shoot.isDown && time > this.lastFired + this.fireRate) {
