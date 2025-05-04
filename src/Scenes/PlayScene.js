@@ -259,6 +259,7 @@ class playScene1 extends Phaser.Scene {
                 hp: this.hp
             });
         }
+        //playable link test
 
 
     }
