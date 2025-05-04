@@ -238,6 +238,18 @@ class playScene1 extends Phaser.Scene {
             }
         });
 
+        if (
+            this.allAngryDucksCleared &&
+            my.group.wallDucks.getLength() === 0
+        ) {
+            // 进入总结场景
+            this.scene.start("transitScene", {
+                wave: this.wave || 1,
+                score: this.score,
+                hp: this.hp
+            });
+        }
+
 
     }
 

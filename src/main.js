@@ -22,7 +22,7 @@ let config = {
     width: 1024,
     height: 768,
     fps: { forceSetTimeOut: true, target: 30 },
-    scene: [playScene1]
+    scene: [playScene1, transitScene]
 }
 
 const game = new Phaser.Game(config);
