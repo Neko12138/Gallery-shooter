@@ -17,9 +17,19 @@ class playScene1 extends Phaser.Scene {
         //intake num
         this.lastFired = 0; 
         this.fireRate = 500; //unit === ms
-        this.allAngryDucksCleared = false;
 
     }
+
+    init(data) {
+        this.score = data.score || 0;
+        this.hp = data.hp || 5;
+        this.wave = data.wave || 1;
+    
+
+        this.allAngryDucksCleared = false;
+        this.wallDucksStartedMoving = false;
+    }
+
     //AAAAAAAAABBBBBBBBBBB
     isAABBIntersecting(a, b) {
         return (
@@ -112,7 +122,8 @@ class playScene1 extends Phaser.Scene {
         this.shooting = false;
         this.shootEndTime = 0;
 
-
+        this.scoreText.setText('Score: ' + this.score);
+        this.hpText.setText('HP: ' + this.hp);
     }
 
     update(time, delta) {
@@ -209,13 +220,13 @@ class playScene1 extends Phaser.Scene {
             });
         });
         //duck die!!!
-        if (!this.allAngryDucksCleared && my.group.ducks.getLength() === 0) {
-            this.allAngryDucksCleared = true;
-        
-            my.group.wallDucks.getChildren().forEach(wallDuck => {
-                wallDuck.isMoving = true;
-                wallDuck.setVelocityX = -5;  
-            });
+        if (my.group.ducks.getLength() === 0) {
+            if (!this.wallDucksStartedMoving) {
+                this.wallDucksStartedMoving = true;
+                my.group.wallDucks.getChildren().forEach(wallDuck => {
+                    wallDuck.isMoving = true;
+                });
+            }
         }
         //duck rush!!!
         my.group.wallDucks.getChildren().forEach(wallDuck => {
@@ -239,10 +250,9 @@ class playScene1 extends Phaser.Scene {
         });
 
         if (
-            this.allAngryDucksCleared &&
+            my.group.ducks.getLength() === 0 &&
             my.group.wallDucks.getLength() === 0
         ) {
-            
             this.scene.start("transitScene", {
                 wave: this.wave || 1,
                 score: this.score,
