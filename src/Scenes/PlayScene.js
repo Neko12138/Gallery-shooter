@@ -51,6 +51,10 @@ class playScene1 extends Phaser.Scene {
         //bullet
         this.load.image("bullet", "icon_bullet_gold_short.png");
         this.load.image("bulletDuck", "icon_bullet_silver_long.png");
+        //sound
+        this.load.audio('playBGM', 'play.mp3');
+        this.load.audio('gun', 'g18.mp3');
+        this.load.audio('duckDeath', 'duck.mp3');
     }
 
     create() {
@@ -65,6 +69,9 @@ class playScene1 extends Phaser.Scene {
         // wall ducks
         my.group.wallDucks = this.add.group();    
         this.sceneOver = false;
+
+        this.playMusic = this.sound.add('playBGM', { loop: true });
+        this.playMusic.play();
 
         this.keys = this.input.keyboard.addKeys({
             up: 'W',
@@ -133,6 +140,12 @@ class playScene1 extends Phaser.Scene {
 
         this.scoreText.setText('Score: ' + this.score);
         this.hpText.setText('HP: ' + this.hp);
+
+        this.events.once('shutdown', () => {
+            if (this.playMusic && this.playMusic.isPlaying) {
+                this.playMusic.stop();
+            }
+        });
     }
 
     update(time, delta) {
@@ -189,6 +202,7 @@ class playScene1 extends Phaser.Scene {
             this.shooting = true;
             this.shootEndTime = time + this.shootDuration;
             //shoot anime
+            this.sound.play('gun');
             my.sprite.player.setTexture("playerShoot");
             //bullet shoot
             let bullet = this.add.sprite(
@@ -219,6 +233,7 @@ class playScene1 extends Phaser.Scene {
                 if (this.isAABBIntersecting(bullet, duck)) {
                     // remove angry duck & bullet
                     my.group.bullets.remove(bullet, true, true);
+                    this.sound.play('duckDeath');
                     my.group.ducks.remove(duck, true, true);
                     this.score += 150;
                     this.scoreText.setText('Score: ' + this.score);
@@ -237,6 +252,7 @@ class playScene1 extends Phaser.Scene {
                         this.score += 100;  // shoot when protec
                     }
                     this.scoreText.setText('Score: ' + this.score);
+                    this.sound.play('duckDeath');
                     my.group.wallDucks.remove(wallDuck, true, true);
                 }
             });

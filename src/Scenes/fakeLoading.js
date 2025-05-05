@@ -8,10 +8,17 @@ class fakeLoading extends Phaser.Scene {
         this.load.image("playerWalk1", "man_walk1.png");
         this.load.image("playerWalk2", "man_walk2.png");
 
-
+        this.load.audio("fakeLoading", "fakeLoading.mp3");
     }
 
     create() {
+
+        this.bgm = this.sound.add("fakeLoading", {
+            volume: 0.5,
+            loop: true
+        });
+        this.bgm.play();
+
         const centerX = this.cameras.main.width / 2;
         const centerY = this.cameras.main.height / 2;
 
@@ -28,7 +35,7 @@ class fakeLoading extends Phaser.Scene {
         this.hunter = this.add.sprite(centerX, centerY, this.hunterFrames[0]);
         this.hunter.setScale(6);
 
-        // "Loading。。。"
+        // "Loading..."
         this.loadingText = this.add.text(centerX, centerY + 100, 'Loading...', {
             fontFamily: 'Arial',
             fontSize: '48px',
@@ -64,6 +71,7 @@ class fakeLoading extends Phaser.Scene {
 
         // enter playScene1
         this.input.keyboard.on('keydown-SPACE', () => {
+            this.bgm.stop();
             this.scene.start("playScene1");
         });
         //TIPS

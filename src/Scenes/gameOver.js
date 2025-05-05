@@ -7,7 +7,15 @@ class gameOver extends Phaser.Scene {
         this.score = data.score || 0;
     }
 
+    preload() {
+        this.load.audio('end', 'assets/end.mp3');
+    }
+
     create() {
+
+        this.endMusic = this.sound.add('end');
+        this.endMusic.play();
+
         this.add.text(300, 200, "GAME OVER", {
             fontSize: '64px',
             fill: '#f00',
@@ -29,6 +37,13 @@ class gameOver extends Phaser.Scene {
         this.keys = this.input.keyboard.addKeys({
             restart: 'SPACE'
         });
+
+        this.events.once('shutdown', () => {
+            if (this.endMusic && this.endMusic.isPlaying) {
+                this.endMusic.stop();
+            }
+        });
+
     }
 
     update() {

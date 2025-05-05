@@ -9,7 +9,15 @@ class transitScene extends Phaser.Scene {
         this.hp = data.hp || 5;
     }
 
+    preload() {
+        this.load.audio('win', 'assets/win.mp3');
+    }
+
     create() {
+
+        this.winMusic = this.sound.add('win');
+        this.winMusic.play();
+
         this.add.text(300, 150, `WAVE ${this.wave} COMPLETE`, {
             fontSize: '48px',
             fill: '#fff',
@@ -36,6 +44,12 @@ class transitScene extends Phaser.Scene {
 
         this.keys = this.input.keyboard.addKeys({
             start: 'SPACE'
+        });
+
+        this.events.once('shutdown', () => {
+            if (this.winMusic && this.winMusic.isPlaying) {
+                this.winMusic.stop();
+            }
         });
     }
 

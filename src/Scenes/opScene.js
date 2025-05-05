@@ -8,9 +8,15 @@ class opScene extends Phaser.Scene {
         this.load.image("playerWalk1", "man_walk1.png");
         this.load.image("playerWalk2", "man_walk2.png");
         this.load.image("angryDuck", "duck_outline_brown.png");
+
+        this.load.audio("titleBGM", "title.mp3");
     }
 
     create() {
+
+        this.bgm = this.sound.add("titleBGM", { loop: true, volume: 0.5 });
+        this.bgm.play();
+
         const centerX = this.cameras.main.width / 2;
         const centerY = this.cameras.main.height / 2;
 
@@ -79,6 +85,13 @@ class opScene extends Phaser.Scene {
             repeat: -1,
             ease: 'Sine.easeInOut'
         });
+
+        this.events.on('shutdown', () => {
+            if (this.bgm && this.bgm.isPlaying) {
+                this.bgm.stop();
+            }
+        });
+
         // start game
         this.input.keyboard.on('keydown-SPACE', () => {
             this.scene.start("fakeLoading"); 
@@ -94,5 +107,11 @@ class opScene extends Phaser.Scene {
             fontSize: '28px',
             color: '#ffffff'
         }).setOrigin(0.5);
+
+        this.musicHint = this.add.text(this.cameras.main.width - 16, 16, 'Press any key to play music', {
+            fontFamily: 'Arial',
+            fontSize: '20px',
+            color: '#FFFF00'
+        }).setOrigin(1, 0);
     }
 }

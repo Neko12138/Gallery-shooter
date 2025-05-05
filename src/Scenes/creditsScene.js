@@ -33,14 +33,14 @@ class creditsScene extends Phaser.Scene {
             align: 'center'
         }).setOrigin(0.5);
 
-        this.add.text(centerX, centerY + 50, 'Audio Assets: Kenny Audio Assets', {
+        this.add.text(centerX, centerY + 50, 'Audio Assets: Kenny Audio Assets, aigei Sound', {
             fontFamily: 'Arial',
             fontSize: '32px',
             color: '#ffffff',
             align: 'center'
         }).setOrigin(0.5);
 
-        this.add.text(centerX, centerY + 100, 'Music Assets: (Leave Blank)', {
+        this.add.text(centerX, centerY + 100, 'Music Assets: Monster Siren Records', {
             fontFamily: 'Arial',
             fontSize: '32px',
             color: '#ffffff',
