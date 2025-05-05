@@ -118,6 +118,12 @@ class playScene1 extends Phaser.Scene {
             fontFamily: 'Arial'
         });
 
+        this.waveText = this.add.text(16, 96, 'Wave: ' + this.wave, {
+            fontSize: '32px',
+            fill: '#fff',
+            fontFamily: 'Arial'
+        });
+
         this.walkToggle = false;
         this.lastWalkTime = 0;
         this.walkInterval = 200;
