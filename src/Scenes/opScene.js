@@ -14,14 +14,21 @@ class opScene extends Phaser.Scene {
         const centerX = this.cameras.main.width / 2;
         const centerY = this.cameras.main.height / 2;
 
+
+        this.add.text(16, 16, 'Press ESC for Credits', {
+            fontFamily: 'Arial',
+            fontSize: '20px',
+            color: '#00FFFF'
+        });
+
         // title
-        this.titleHunt = this.add.text(centerX - 250, centerY - 100, 'Hunt', {
+        this.titleHunt = this.add.text(centerX - 250, centerY - 190, 'Hunt', {
             fontFamily: 'Impact, Arial Black, sans-serif',
             fontSize: '144px',
             color: '#A0522D', 
             align: 'center'
         });
-        this.titleDuck = this.add.text(centerX + 0, centerY + 30, 'Duck', {
+        this.titleDuck = this.add.text(centerX + 0, centerY - 60, 'Duck', {
             fontFamily: 'Impact, Arial Black, sans-serif',
             fontSize: '144px',
             color: '#DAA520', 
@@ -31,14 +38,14 @@ class opScene extends Phaser.Scene {
         // hunter animation
         this.hunterFrames = ["playerWalk1", "playerWalk2"];
         this.hunterFrameIndex = 0;
-        this.hunter = this.add.sprite(centerX - 100, centerY - 100, this.hunterFrames[0]);
+        this.hunter = this.add.sprite(centerX - 100, centerY - 190, this.hunterFrames[0]);
         this.hunter.setScale(5);
         this.hunterMovingRight = true;
 
         // duck animation
-        this.duck = this.add.sprite(centerX + 170, centerY + 45, "angryDuck");
+        this.duck = this.add.sprite(centerX + 170, centerY - 45, "angryDuck");
         this.duck.setScale(0.5);
-        this.duck.setFlipX(false); // 朝右
+        this.duck.setFlipX(false); 
         this.duckMovingRight = false;
 
         // anime timers
@@ -75,6 +82,10 @@ class opScene extends Phaser.Scene {
         // start game
         this.input.keyboard.on('keydown-SPACE', () => {
             this.scene.start("playScene1");
+        });
+
+        this.input.keyboard.on('keydown-ESC', () => {
+            this.scene.start("creditsScene");
         });
 
         // "start" text
