@@ -81,7 +81,7 @@ class opScene extends Phaser.Scene {
         });
         // start game
         this.input.keyboard.on('keydown-SPACE', () => {
-            this.scene.start("playScene1");
+            this.scene.start("fakeLoading"); 
         });
 
         this.input.keyboard.on('keydown-ESC', () => {
