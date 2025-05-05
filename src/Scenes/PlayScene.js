@@ -64,7 +64,7 @@ class playScene1 extends Phaser.Scene {
         my.group.ducks = this.add.group();
         // wall ducks
         my.group.wallDucks = this.add.group();    
-     
+        this.sceneOver = false;
 
         this.keys = this.input.keyboard.addKeys({
             up: 'W',
@@ -248,19 +248,30 @@ class playScene1 extends Phaser.Scene {
                 }
             }
         });
+        
+        //gg
+        if (!this.sceneOver && this.hp <= 0) {
+            this.sceneOver = true;
+            this.scene.start("gameOver", {
+                score: this.score
+            });
+            return;
+        }
 
+        //next wave
         if (
+            !this.sceneOver &&
             my.group.ducks.getLength() === 0 &&
             my.group.wallDucks.getLength() === 0
         ) {
+            this.sceneOver = true;
             this.scene.start("transitScene", {
                 wave: this.wave || 1,
                 score: this.score,
                 hp: this.hp
             });
+            return;
         }
-        //playable link test
-
 
     }
 
