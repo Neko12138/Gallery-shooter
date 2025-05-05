@@ -71,6 +71,8 @@ class playScene1 extends Phaser.Scene {
             down: 'S',
             shoot: 'space'
         });
+        //duck bullet
+        my.group.duckBullets = this.add.group();
 
         //real creat duck group
         my.group.ducks = this.add.group();
@@ -86,6 +88,7 @@ class playScene1 extends Phaser.Scene {
             duck.setFlipX(true);
             duck.direction = 1; // move down
             my.group.ducks.add(duck);
+            duck.nextFireTime = this.time.now + Phaser.Math.Between(1000, 5000);
         }
 
         // Create wall ducks 
@@ -128,7 +131,7 @@ class playScene1 extends Phaser.Scene {
 
     update(time, delta) {
         let my = this.my;
-        //duck move
+        //duck move & shoot
         my.group.ducks.getChildren().forEach(duck => {
             duck.y += duck.direction * 6;
         
@@ -136,8 +139,21 @@ class playScene1 extends Phaser.Scene {
             if (duck.y <= duck.displayHeight / 2 || duck.y >= 768 - duck.displayHeight / 2) {
                 duck.direction *= -1;
             }
+
+            if (time > duck.nextFireTime) {
+                // duck fire!
+                let duckBullet = this.add.sprite(duck.x - 40, duck.y, "bulletDuck");
+                duckBullet.setScale(0.5);
+                duckBullet.setAngle(-90)
+                my.group.duckBullets.add(duckBullet);
+        
+                // fire rate of duck
+                duck.nextFireTime = time + Phaser.Math.Between(2000, 10000);
+            }
         });
         
+        
+
         // coll detect of angryduck
         let ducks = my.group.ducks.getChildren();
         for (let i = 0; i < ducks.length; i++) {
@@ -219,6 +235,24 @@ class playScene1 extends Phaser.Scene {
                 }
             });
         });
+
+        my.group.duckBullets.getChildren().forEach(bullet => {
+            bullet.x -= 6;
+        
+            // 
+            if (bullet.x < -bullet.width) {
+                my.group.duckBullets.remove(bullet, true, true);
+            }
+        
+            // 
+            if (this.isAABBIntersecting(bullet, my.sprite.player)) {
+                this.hp -= 1;
+                this.hpText.setText('HP: ' + this.hp);
+                my.group.duckBullets.remove(bullet, true, true);
+            }
+        });
+
+
         //duck die!!!
         if (my.group.ducks.getLength() === 0) {
             if (!this.wallDucksStartedMoving) {

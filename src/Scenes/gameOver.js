@@ -14,15 +14,15 @@ class gameOver extends Phaser.Scene {
             fontFamily: 'Arial'
         });
 
-        this.add.text(300, 300, `Final Score: ${this.score}`, {
+        this.add.text(390, 300, `Final Score: ${this.score}`, {
             fontSize: '32px',
             fill: '#fff',
             fontFamily: 'Arial'
         });
 
-        this.add.text(220, 450, "Press SPACE to restart", {
+        this.add.text(360, 450, "Press SPACE to restart", {
             fontSize: '28px',
-            fill: '#0f0',
+            fill: '#FFD700',
             fontFamily: 'Arial'
         });
 

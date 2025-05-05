@@ -16,21 +16,21 @@ class transitScene extends Phaser.Scene {
             fontFamily: 'Arial'
         });
 
-        this.add.text(300, 250, `Score: ${this.score}`, {
+        this.add.text(410, 250, `Score: ${this.score}`, {
             fontSize: '32px',
             fill: '#fff',
             fontFamily: 'Arial'
         });
 
-        this.add.text(300, 300, `HP: ${this.hp}`, {
+        this.add.text(450, 300, `HP: ${this.hp}`, {
             fontSize: '32px',
             fill: '#fff',
             fontFamily: 'Arial'
         });
 
-        this.add.text(250, 450, `Press SPACE to start Wave ${this.wave + 1}`, {
+        this.add.text(300, 450, `Press SPACE to start Wave ${this.wave + 1}`, {
             fontSize: '28px',
-            fill: '#0f0',
+            fill: '#FFD700',
             fontFamily: 'Arial'
         });
 
